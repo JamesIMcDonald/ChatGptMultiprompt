@@ -71,6 +71,10 @@ textarea {
     padding: 5px;
 }
 
+a:hover {
+    filter: brightness(70%);
+}
+
 .loadArea {
     display: flex;
     flex-direction: column;
