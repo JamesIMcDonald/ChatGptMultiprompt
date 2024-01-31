@@ -1,0 +1,158 @@
+
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgb(52, 53, 65);
+    color: white;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+h1 {
+    margin: auto;
+    border-bottom: 2px solid white;
+    border-radius: 5px;
+}
+
+table, th, td {
+    border: 1px solid white;
+    border-collapse: collapse;
+}
+
+.table {
+    padding: 5px;
+    table-layout: fixed;
+}
+
+th, td {
+    width: max-content;
+}
+
+th {
+    padding: 5px;
+    letter-spacing: 2px;
+}
+
+td {
+    padding: 5px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+h2, h3, h4, p {
+    margin: 0;
+}
+
+ul {
+    max-width: 70vw;
+    min-width: 400px;
+}
+
+button, input {
+    padding: 5px;
+    border: 2px solid white;
+    border-radius: 5px;
+}
+
+button:hover {
+    filter: brightness(150%);
+}
+
+button:active {
+    filter: brightness(200%);
+}
+
+textarea {
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.loadArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.dataWorking {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.container {
+    max-width: 98vw;
+    min-height: 200px;
+    border: 2px solid white;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    overflow-y: auto;
+    white-space: nowrap;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.container > h2 {
+    margin: auto;
+}
+
+.input, .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+
+.input {
+    border: 2px solid white;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 98vw;
+    box-sizing: border-box;
+}
+
+.input > button {
+    width: fit-content;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.buttonDiv {
+    display: flex;
+    gap: 10px;
+}
+
+.rowSelect {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    width: min-content;
+}
+
+.entryContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    padding: 10px;
+    gap: 10px;
+}
+
+.entry {
+    text-align: center;
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.entry > p {
+    margin-top: 5px;
+}

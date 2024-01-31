@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MultiPrompt with ChatGPT</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>MultiPrompt with ChatGPT</h1>
+    <!-- just putthing this here so its positioned right -->
+    <div class="dataWorking">
+        <div class="loadArea">
+            <h2>Please Load your file:</h2>
+            <div class="input">
+                <input type="file" name="file" id="file">
+                <div class="buttonDiv">
+                    <label for="number">Rows to display on-page (blank/0 for all)</label>
+                    <input type="number" name="number" id="number">
+                    <button class="load">Begin Load</button>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <h2>Your CSV will be displayed here</h2>
+            <!-- inside of here should be the table -->
+        </div>
+        <div class="input">
+            <h2>Prompt Testing Area</h2>
+            <p>Write a prompt for ChatGpt to iterate over every cell with. If you would like to call on a cell in your message you can do so with the id listed as: {{idNum}}</p>
+            <h4>What the different buttons do:</h4>
+            <ul>
+                <li><b>Api Key:</b> Needed for the program to work, follow this <a href="https://www.maisieai.com/help/how-to-get-an-openai-api-key-for-chatgpt" target="_blank" rel="noopener noreferrer"><b>link</b></a> here, follow the instructions to get an Api Key, SAVE IT! Then add $5 to your account, each request costs fractions of a cent (I've run 1500+ requests and it only cost $0.50).</li>
+                <li><b>Test Prompt:</b> From the selected row number for the given quantity it will show you what all of their generated prompts will be (runs fast as it doesn't have to call anything external).</li>
+                <li><b>Test Submit:</b> For the same selection criteria this button will call the chatGPT api and provide you with the prompt, response and some useful analytics.</li>
+                <li><b>Submit:</b> This button will run the prompt against the whole list it will add a column to the CSV in memory (NOT YOUR FILE) labelled "chatGPTReturn" populate it then, once fully run it will offer up a CSV to be downloaded.</li>
+                <li><b>Notes:</b> 
+                    <ol>
+                        <li>Please make sure there are no blank rows.</li>
+                        <li>Please make sure your top row has column names.</li>
+                        <li>It helps to specify that you want ChatGPT to start the message in a certain way "Start of Message" so that you can separate it easily.</li>
+                    </ol>
+                </li>
+            </ul>
+            <textarea name="chatGptInput" id="chatGptInput" cols="100" rows="10"></textarea>
+            <div class="buttonDiv">
+                <button class="apiPrompt">Api Key</button>
+                <div class="rowSelect">
+                    <label for="testRow">Row to test on</label>
+                    <input type="number" name="testRow" id="testRow">
+                </div>
+                <div class="rowSelect">
+                    <label for="testNum"># of rows tested</label>
+                    <input type="number" name="testNum" id="testNum">
+                </div>
+                <button class="test">Test prompt</button>
+                <button class="testSubmit">Test submit</button>
+                <button class="submit">Submit</button>
+            </div>
+            <div class="entryContainer">
+                <h3>Entries generated will appear here:</h3>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="module" src="testingEntryConstruction.js"></script>
+<script type="module" src="csvToArray.js"></script>
+<script type="module" src="generateHTMLTable.js"></script>
+<script type="module" src="openAiAPI.js"></script>
+<script type="module" src="readCSVFile.js"></script>
+<script type="module" src="domRenderingInteraction.js"></script>
+</html>
