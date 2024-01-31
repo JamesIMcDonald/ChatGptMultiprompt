@@ -71,8 +71,13 @@ textarea {
     padding: 5px;
 }
 
+a {
+    text-decoration: none;
+    font-style: italic;
+}
+
 a:hover {
-    filter: brightness(70%);
+    color: rgb(131, 131, 131);
 }
 
 .loadArea {
