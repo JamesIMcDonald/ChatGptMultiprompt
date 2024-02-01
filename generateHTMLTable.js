@@ -1,6 +1,6 @@
 
 
-// this function takes in an array of arrays and spits out the html structure for the whole thing:
+// this function takes in a 2d array and spits out the html structure for the whole thing:
 function generateHTMLTable(array, rowQty = array.length){
     const container = document.createElement('table')
     const tHead = document.createElement('thead')

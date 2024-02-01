@@ -1,4 +1,4 @@
-
+// This function returns the entries that you see when hitting testingprompt etc
 function constructEntryHtml(title, prompt, response = null, analytics = null) {
     const container = document.createElement('div')
     container.classList.add('entry')

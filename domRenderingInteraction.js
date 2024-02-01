@@ -14,6 +14,7 @@ const interaction = (async function(){
     let fileName = null
     let apiKey = null
 
+    // Handles the loading of the csv and the displaying of it
     csvLoadButton.addEventListener('click', async function(){
         const file = csvInput.files[0]
         if (file) {
@@ -37,7 +38,6 @@ const interaction = (async function(){
             tableContainer.innerHTML = ''
             tableContainer.appendChild(newTable)
             csv = loadedCSV
-            // need to implement logic here to get rid of the empty rows
             for (let i = 0; i < loadedCSV.length; i++) {
                 let rowHasContent = false
                 loadedCSV[i].forEach(function(element){
@@ -55,7 +55,7 @@ const interaction = (async function(){
         }
     })
 
-    // function to read files from file inputs
+    // function to read files from file inputs, used above.
     function readFileAsync(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -72,6 +72,7 @@ const interaction = (async function(){
         });
     }
 
+    // The actual useful part of this whole thing.
     function constructModularPrompt(string, array){
         // this function will take in a string and an array and return a string which adds the selected values from the array
         // Use a regular expression to match placeholders {{index}}
@@ -120,9 +121,11 @@ const interaction = (async function(){
             return
         }
         entryContainer.innerHTML = ''
+        // gets the row num and num of rows
         const testRowQuantNum = parseInt(testRowSelectNumInput.value)
         const workingRowBeginning = parseInt(testRowSelectInput.value)
 
+        // the actual loop that does the work
         const finalLoopNum = testRowQuantNum > 0 ? testRowQuantNum + workingRowBeginning : workingRowBeginning + 1;
         let totalTokensUsed = 0
         let requestsNum = 0
@@ -142,7 +145,7 @@ const interaction = (async function(){
         console.log(`Operation finished it used ${totalTokensUsed} tokens in total, made ${requestsNum} requests and took ${(endTime - startTime)/1000}s to complete.`)
     })
 
-
+    // this function starts on array[1] to account for the column names and runs through every entry adding an array entry with the chatGPT message. Once its done it creates a new file with
     const submitBtn = document.querySelector('.submit')
     submitBtn.addEventListener('click', async function(){
         if (!csv) {
@@ -155,6 +158,7 @@ const interaction = (async function(){
         }
         entryContainer.innerHTML = ''
         const workingRowBeginning = 1
+        // this is one higher than what we need for the for loop
         const finalLoopNum = csv.length
         let totalTokensUsed = 0
         let requestsNum = 0
@@ -174,7 +178,7 @@ const interaction = (async function(){
             entryContainer.appendChild(entry)
         }
         const CSVData = convertArrayToCSV(csv)
-        // this will split a string into an array so that when we grab the last section its the old filename
+        // this will split a string into an array so that when we grab the needed section of its old filename
         const oldName = fileName.split('.')
         const workingName = oldName[0]
         const newName = `${workingName} + chatGPT addition.csv`

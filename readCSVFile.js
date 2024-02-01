@@ -1,5 +1,6 @@
 import CSVToArray from "./csvToArray.js"
 
+// This function is only called on CSV's, it is used to take a filepath leading to a csv and returns a 2d array with the same contents
 async function readCSVFile(path){
     try {
         const response = await fetch(path)
