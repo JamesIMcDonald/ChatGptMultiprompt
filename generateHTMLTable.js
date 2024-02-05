@@ -1,6 +1,7 @@
 
 
-// this function takes in a 2d array and spits out the html structure for the whole thing:
+// this function takes in a 2d array and spits out a HTML table which is decently marked up.
+// alongside that it first adds a row which has the idNumbers for each column, this is so that users know what number to refer to in their prompts.
 function generateHTMLTable(array, rowQty = array.length){
     const container = document.createElement('table')
     const tHead = document.createElement('thead')
