@@ -5,6 +5,7 @@ import openAiApi from "./openAiAPI.js";
 
 
 const interaction = (async function(){
+    // defining places for the first section of the page: the CSV loading
     const tableContainer = document.querySelector('.container')
     const csvInput = document.getElementById('file')
     const csvLoadButton = document.querySelector('.load')
@@ -20,24 +21,32 @@ const interaction = (async function(){
         if (file) {
             csv = null
             fileName = file.name
+            // check to make sure its a CSV
             if (!fileName.includes('.csv')) {
                 return alert('Please load a CSV file')
             }
+            // reading the file from the input
             const workingFile = await readFileAsync(file)
+            // turning the CSV data into a matrix
             const loadedCSV = CSVToArray(workingFile)
+            // this is added due to a problem I was having with the matrix having one extra ghost row that the csv didn't have.
+            // this checks that the final row is the same length as the row before and if its not i.e. a ghost row it gets deleted.
             let rowsNum = loadedCSV.length
             if (loadedCSV[rowsNum-1].length !== loadedCSV[rowsNum-2].length) {
                loadedCSV.pop() 
             }
-            // setting this to be the new length
+            // updating rowsNum so that if the length of the array changed its still right.
             rowsNum = loadedCSV.length
             if (csvDisplayNumInput.value > 0) {
                 rowsNum = csvDisplayNumInput.value
             }
+            // this now makes the html table from the matrix for the specified number of rows
             const newTable = generateHTMLTable(loadedCSV, rowsNum)
             tableContainer.innerHTML = ''
             tableContainer.appendChild(newTable)
+            // this now gives the CSV to the rest of the module
             csv = loadedCSV
+            // this for loop is a check to make sure that there arent 1m+ empty rows after the final entry. This can happen if you export a csv from an excel sheet.
             for (let i = 0; i < loadedCSV.length; i++) {
                 let rowHasContent = false
                 loadedCSV[i].forEach(function(element){
@@ -75,6 +84,7 @@ const interaction = (async function(){
     // The actual useful part of this whole thing.
     function constructModularPrompt(string, array){
         // this function will take in a string and an array and return a string which adds the selected values from the array
+        // the array passed in will be the row that is currently being worked on
         // Use a regular expression to match placeholders {{index}}
         const placeholderRegex = /\{\{(\d+)\}\}/g;
         // Replace each matched placeholder with the corresponding value from the array
@@ -85,7 +95,7 @@ const interaction = (async function(){
         return replacedString;
     }
 
-    // all required for the functions below
+    // all required for the functions below this is all of the important parts of the testing area
     const promptTextArea = document.getElementById('chatGptInput')
     const testPromptBtn = document.querySelector('.test')
     const testRowSelectInput = document.getElementById('testRow')
@@ -95,14 +105,18 @@ const interaction = (async function(){
 
     testPromptBtn.addEventListener('click', function(){
         // this function needs to take in the working row num and the num of rows to test and then spit out the generated prompt from each row one after the other
+        // check for a loaded csv
         if (!csv) {
             alert('Please load a CSV')
             return
         }
+        // the quantity of cells you will test
         const testRowQuantNum = parseInt(testRowSelectNumInput.value)
+        // the beginning of the test range
         const workingRowBeginning = parseInt(testRowSelectInput.value)
         entryContainer.innerHTML = ''
         const finalLoopNum = testRowQuantNum > 0 ? testRowQuantNum + workingRowBeginning : workingRowBeginning + 1;
+        // the loop to make the entries
         for (let i = testRowSelectInput.value; i < finalLoopNum; i++) {
             const prompt = constructModularPrompt(promptTextArea.value, csv[i])
             const entry = constructEntryHtml(`CSV entry ${i}`, prompt)
@@ -145,7 +159,8 @@ const interaction = (async function(){
         console.log(`Operation finished it used ${totalTokensUsed} tokens in total, made ${requestsNum} requests and took ${(endTime - startTime)/1000}s to complete.`)
     })
 
-    // this function starts on array[1] to account for the column names and runs through every entry adding an array entry with the chatGPT message. Once its done it creates a new file with
+    // this function starts on array[1] to account for the column names and runs through every entry adding an array entry with the chatGPT message.
+    // once done it gives a new file a column at the end called ChatGPTReturn
     const submitBtn = document.querySelector('.submit')
     submitBtn.addEventListener('click', async function(){
         if (!csv) {
@@ -178,7 +193,7 @@ const interaction = (async function(){
             entryContainer.appendChild(entry)
         }
         const CSVData = convertArrayToCSV(csv)
-        // this will split a string into an array so that when we grab the needed section of its old filename
+        // this will split a string into an array so that when we grab the needed section of its old filename so that we can make a new name
         const oldName = fileName.split('.')
         const workingName = oldName[0]
         const newName = `${workingName} + chatGPT addition.csv`
@@ -215,6 +230,7 @@ const interaction = (async function(){
         apiPrompt()
     })
 
+    // this isn't a real key but it is used to show users who might not know what they are looking for what one would look like
     function apiPrompt(){
         apiKey = prompt('Please enter a valid API key', 'e.g. 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')
     }
