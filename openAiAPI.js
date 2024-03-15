@@ -18,10 +18,15 @@ const openAiApi = (function(){
     }
 
     // constructs the body of the API request
+    // edited this prompt so that it will hopefully output text without linebreaks
     function createReqData(prompt, apiKey) {
         const requestData = {
             model: 'gpt-3.5-turbo',
             messages: [
+                {
+                    role: 'system',
+                    content: 'You are a bot that takes in a prompt and gives the output in a format which fits into a CSV file. NO "/n" EVER.'
+                },
                 {
                     role: 'user',
                     content: `${prompt}`
