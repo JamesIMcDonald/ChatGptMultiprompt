@@ -187,7 +187,7 @@ const interaction = (async function(){
             const importantAnalytics = `Prompt tokens: ${request.usage.prompt_tokens}, Completion Tokens: ${request.usage.completion_tokens}, Total tokens: ${request.usage.total_tokens}, elapsedTime: ${request.usage.time.elapsedTime.toFixed(2)}s`
             totalTokensUsed = totalTokensUsed + request.usage.total_tokens
             requestsNum++
-            csv[i].push(`${response}`)
+            csv[i].push('"' + response + '"')
             // const elapsedTime = request.
             const entry = constructEntryHtml(`CSV entry ${i}:`, prompt, response, importantAnalytics)
             entryContainer.appendChild(entry)
