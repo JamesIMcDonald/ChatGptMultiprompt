@@ -21,7 +21,7 @@ const openAiApi = (function(){
     // edited this prompt so that it will hopefully output text without linebreaks
     function createReqData(prompt, apiKey) {
         const requestData = {
-            model: 'gpt-3.5-turbo',
+            model: 'gpt-4-turbo',
             messages: [
                 {
                     role: 'system',
