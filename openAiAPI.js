@@ -25,7 +25,7 @@ const openAiApi = (function(){
             messages: [
                 {
                     role: 'system',
-                    content: 'You are a bot that takes in a prompt and gives the output in a format which fits into a CSV file. NO "/n" EVER.'
+                    content: 'You are a bot that takes in a prompt and gives the output in a format which fits into a CSV file. NO "/n" EVER as I want your return to only be in one cell.'
                 },
                 {
                     role: 'user',

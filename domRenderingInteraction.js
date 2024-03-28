@@ -206,10 +206,12 @@ const interaction = (async function(){
 
     function convertArrayToCSV(array) {
         const csvContent = array.map(row =>
-            row.map(cell =>
-                // If the cell contains a comma, enclose it in double quotes
-                cell.includes(',') ? `"${cell}"` : cell
-            ).join(',')
+            row.map(cell => {
+                // Escape double quotes by doubling them
+                const escapedCell = cell.replace(/"/g, '""');
+                // Enclose every cell in double quotes
+                return `"${escapedCell}"`;
+            }).join(',')
         ).join('\n');
     
         return csvContent;
